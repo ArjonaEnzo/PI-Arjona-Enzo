@@ -1,0 +1,18 @@
+.contForm{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.inputInf{
+  width: 15rem;
+}
+.inputSub{
+  margin: 2rem;
+  background-color: blueviolet;
+}
+
+.errorInfo{
+  color: red;
+}

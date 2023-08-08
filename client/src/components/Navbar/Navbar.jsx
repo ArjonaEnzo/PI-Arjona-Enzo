@@ -1,19 +1,31 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./navbar.css";
+import styled from "./navbar.module.css";
+
+// className={styled.conteins}
+
 const Navbar = () => {
   return (
-    <div className="nav-cont">
-      <div className="nav-img-cont">
-        <img
-          src="client\src\img\навигационная эмблема розы ветров PNG , звезда, Роза, Путешествовать PNG картинки и пнг рисунок для бесплатной загрузки.png"
-          alt=""
-        />
+    <div className={styled.barraNav}>
+      <div>
+        <Link to={"/"}>
+          <img
+            className={styled.imgNav}
+            src="https://iili.io/HthHLVR.th.png"
+            alt="Logo"
+          />
+        </Link>
       </div>
-      <div className="nav-link-cont">
+      <div className={styled.navLinkContain}>
         <Link to={"/home"}>Home</Link>
         <Link to={"/create"}>Create Activity</Link>
         <Link to={"/details"}>Countries</Link>
+      </div>
+      <div>
+        <form>
+          <input type="text" />
+          <input type="submit" />
+        </form>
       </div>
     </div>
   );

@@ -1,0 +1,16 @@
+.barraNav {
+  background-color: yellow;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.imgNav {
+  width:3.5rem;
+}
+
+.navLinkContain {
+  display: flex;
+  justify-content: space-between;
+  width: 16rem;
+}

@@ -1,0 +1,11 @@
+.conteinCard{
+  background-color: brown;
+  width: 15rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5rem;
+  border: solid 1.5px black ;
+  border-radius: 10px ;
+}
