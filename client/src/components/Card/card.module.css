@@ -1,11 +1,26 @@
-.conteinCard{
-  background-color: brown;
+.conteinCard {
+  /* background-color: brown;
   width: 15rem;
+  margin: 0.5rem;
+  border: solid 1.5px black;
   display: flex;
+  border-radius: 10px; */
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0.5rem;
-  border: solid 1.5px black ;
-  border-radius: 10px ;
+  margin: 0 auto;
+	padding: 2em;
+	border-radius: 16px;
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	width: 20rem;
+	backdrop-filter: blur(5px);
+	background-color: rgba(0, 0, 0, .8);
+	transition-duration: 0.3s;
+	height: 21em;
+	font-size: 1.2rem;
+}
+.imgFlag {
+  border-radius: 5px;
+	width: 2rem;
+	height: 9rem;
 }

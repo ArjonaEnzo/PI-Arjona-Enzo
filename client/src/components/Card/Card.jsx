@@ -4,7 +4,9 @@ const Card = ({ name, continent, flag }) => {
   return (
     <div className={styled.conteinCard}>
       <div>
-        <h2 className={styled.imgFlag}>{flag}</h2>
+        <h2 className={styled.imgFlag}>
+          <img src={flag} alt="flag" />
+        </h2>
       </div>
       <div className={styled.info}>
         <label>Name</label>
