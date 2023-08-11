@@ -1,18 +1,17 @@
 import { React, useEffect, useState } from "react";
 import styled from "./create.module.css";
-import { validate } from "./validation";
 import { getAllCountries, postActivities } from "../../Redux/Actions/actions";
+import { getDificulty } from "./getDificilty";
 
 import { useDispatch, useSelector } from "react-redux";
 
 const Create = () => {
   const countries = useSelector((state) => state.allCountries);
-  console.log(countries);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllCountries());
-    return () => {};  
+    return () => {};
   }, [dispatch]);
 
   const [state, setState] = useState({
@@ -22,11 +21,17 @@ const Create = () => {
     season: [],
     countries: [],
   });
-  console.log(state.season)
-  const [errors, setErrors] = useState({});
+  console.log(state.season);
+
+  const [errors, setErrors] = useState({
+    season: "This field is required",
+    name: "This field is required",
+    duration: "This field is required",
+    dificult: "This field is required",
+    countries: "This field is required",
+  });
 
   const [selected, setSelected] = useState([]);
-  console.log("selec", selected);
 
   const handleChange = (event) => {
     setState({
@@ -34,29 +39,40 @@ const Create = () => {
       [event.target.name]: event.target.value,
     });
 
-    setErrors(
-      validate(
-        {
-          ...state,
-          [event.target.name]: event.target.value,
-        },
-        event.target.name
-      )
+    validate(
+      {
+        ...state,
+        [event.target.name]: event.target.value,
+      },
+      event.target.name
     );
   };
 
   const handleCountries = (event) => {
+    const countriesId = event.target.value;
+    const country = countries.find((count) => count.id === countriesId);
+
+    if (country) {
+      setErrors({
+        ...errors,
+        countries: "",
+      });
+    } else {
+      setErrors({
+        ...errors,
+        countries: "Debes seleccionar al menos un país",
+      });
+    }
+
     setState({
       ...state,
-      countries: [...state.countries, event.target.value],
+      countries: [...state.countries, countriesId],
     });
-
-    const country = countries.find((count) => count.id === event.target.value);
 
     setSelected([
       ...selected,
       {
-        id: event.target.value,
+        id: countriesId[0],
         name: country.name,
         flag: country.flagImage,
       },
@@ -64,78 +80,99 @@ const Create = () => {
   };
 
   const deletCountries = (id) => {
+    if (selected.length === 0) {
+      setErrors({ ...errors, countries: "Select at least on country" });
+    }
     const filtCon = countries.filter((c) => c !== id);
     setState({ ...state, countries: filtCon });
     setSelected(selected.filter((c) => c.id !== id));
   };
 
-  let disabled = true;
   const disable = () => {
-    if (errors === "") disabled = true;
-    else {
-      disabled = false;
-    }
-    return disabled;
+    return (
+      !!errors.name ||
+      !!errors.dificult ||
+      !!errors.duration ||
+      !!errors.season ||
+      selected.length === 0
+    );
   };
 
   const handleSubmit = (event) => {
-    console.log(event);
     event.preventDefault();
     dispatch(postActivities(state));
   };
 
-  const handleBox = (e) => {
-    if (e.target.checked) {
-      setState({
-        ...state,
-        season: [...state.season, e.target.value],
-      });
-    } else {
-      setState({
-        ...state,
-        season: state.season.filter((sea) => sea !== e.target.value),
-      });
-    }
-  };
-
   const handleRang = (e) => {
     const { name, value } = e.target;
+    const parseValue = parseInt(value);
+
+    if (name === "dificult") {
+      if (parseValue >= 1 && parseValue <= 5)
+        setErrors({ ...errors, dificult: "" });
+      else {
+        setErrors({ ...errors, dificult: "Select a difficulty level" });
+        return;
+      }
+    }
+
+    if (name === "duration") {
+      if (parseValue >= 1 && parseValue <= 24)
+        setErrors({ ...errors, duration: "" });
+      else {
+        setErrors({ ...errors, duration: "Select a duration" });
+      }
+    }
 
     setState({
       ...state,
-      [name]: parseInt(value),
+      [name]: parseValue,
     });
-    setErrors(
-      validate(
-        {
-          ...state,
-          [name]: value,
-        },
-        name
-      )
-    );
-  };
-
-  const getDificulty = (value) => {
-    switch (value) {
-      case 1:
-        return "Peaceful";
-      case 2:
-        return "Easy";
-      case 3:
-        return "Normal";
-      case 4:
-        return "Hard";
-      case 5:
-        return "Professional";
-      default:
-        return "";
-    }
   };
 
   const filterCountries = countries.filter(
     (count) => !state.countries.includes(count.id)
   );
+
+  const validate = (state, name) => {
+    if (name === "name") {
+      if (state.name !== "") setErrors({ ...errors, name: "" });
+      else {
+        setErrors({ ...errors, name: "This field is required" });
+        return;
+      }
+
+      if (state.name.length < 35) setErrors({ ...errors, name: "" });
+      else {
+        setErrors({ ...errors, name: "Can't be longer than 35 characters" });
+        return;
+      }
+
+      if (!/^[A-Za-z\s]+$/i.test(state.name))
+        setErrors({
+          ...errors,
+          name: "The name of the activity can only include letters and spaces.",
+        });
+      else {
+        setErrors({
+          ...errors,
+          name: "",
+        });
+        return;
+      }
+    }
+
+    if (name === "season") {
+      if (state.season.length === 0)
+        setErrors({
+          ...errors,
+          season: "This field is required",
+        });
+      else {
+        setErrors({ ...errors, season: "" });
+      }
+    }
+  };
 
   return (
     <div>
@@ -163,7 +200,9 @@ const Create = () => {
           className={styled.inputInf}
         />
         <p>{getDificulty(state.dificult)}</p>
-        <label className={styled.errorInfo}>{errors.dificult}</label>
+        <label className={styled.errorInfo}>
+          {errors.dificult && <p>{errors.dificult}</p>}
+        </label>
 
         <label>Duration</label>
         <input
@@ -175,29 +214,25 @@ const Create = () => {
           value={state.duration}
           className={styled.inputInf}
         />
-        <p>{state.duration} Horas</p>
-        <label className={styled.errorInfo}>{errors.duration}</label>
+        <p>{state.duration} Hour</p>
+        <label className={styled.errorInfo}>
+          {" "}
+          {errors.duration && <p>{errors.duration}</p>}
+        </label>
 
         <label>Season</label>
         <div>
-          <label>
-            <input type="checkbox" onChange={handleBox} value="Verano" />
-            Summer
-          </label>
-          <label>
-            <input type="checkbox" onChange={handleBox} value="Otoño" />
-            Autumn
-          </label>
-          <label>
-            <input type="checkbox" onChange={handleBox} value="Invierno" />
-            Winter
-          </label>
-          <label>
-            <input type="checkbox" onChange={handleBox} value="Primavera" />
-            Spring
-          </label>
+          <select name="season" onChange={handleChange}>
+            <option value="">-Select a season-</option>
+            <option value="Verano">Summer</option>
+            <option value="Otoño">Autumn</option>
+            <option value="Invierno">Winter</option>
+            <option value="Primavera">Spring</option>
+          </select>
         </div>
-        <label className={styled.errorInfo}>{errors.season}</label>
+        <label className={styled.errorInfo}>
+          {errors.season && <p>{errors.season}</p>}
+        </label>
 
         <label>Countries</label>
         <select onChange={handleCountries} name="countries" id="country">
@@ -210,12 +245,15 @@ const Create = () => {
             );
           })}
         </select>
+        <label className={styled.errorInfo}>
+          {errors.countries && <p>{errors.countries}</p>}
+        </label>
 
         <div>
           <h2>Countries Selected:</h2>
-          {selected?.map((c) => {
+          {selected?.map((c, index) => {
             return (
-              <div>
+              <div key={index}>
                 <div>
                   <img src={c.flag} alt={`${c.name}icon`} />
                   <p>{c.name}</p>

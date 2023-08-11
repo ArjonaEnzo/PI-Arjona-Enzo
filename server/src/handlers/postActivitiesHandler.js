@@ -2,13 +2,13 @@ const postActivitiesController = require("../controllers/postActivitiesControlle
 
 const postActivitiesHandler = async (req, res) => {
   try {
-    const { name, dificult, duration, season, pais } = req.body;
+    const { name, dificult, duration, season, countries } = req.body;
     const response = await postActivitiesController(
       name,
       dificult,
       duration,
       season,
-      pais
+      countries
     );
     res.status(200).json(response);
   } catch (error) {

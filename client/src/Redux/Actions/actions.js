@@ -8,6 +8,7 @@ export function postActivities(state) {
         "http://localhost:3001/activities/",
         state
       );
+      console.log("estadoAct",state);
       alert("The activity is created correctly");
     } catch (error) {
       alert(error.response.data.error);

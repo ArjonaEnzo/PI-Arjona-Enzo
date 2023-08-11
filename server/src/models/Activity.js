@@ -22,7 +22,7 @@ module.exports = (sequelize) => {
         },
       },
       duration: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.INTEGER,
         defaultValue: 1.0,
       },
       season: {
