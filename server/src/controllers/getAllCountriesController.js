@@ -1,8 +1,8 @@
-const {Country} = require("../db");
+const { Country } = require("../db");
 
 const getAllCountriesController = async () => {
   const countries = await Country.findAll();
-  return countries
+  return countries;
 };
 
 module.exports = getAllCountriesController;

@@ -6,7 +6,7 @@ const getDB = require("./src/controllers/getDB");
 
 // Sincronizar la BD y luego levantar el servidor
 conn
-  .sync({ force: true })
+  .sync({ force: false })
   .then(() => {
     server.listen(PORT, async () => {
       console.log(`Server listening on port ${PORT}`);

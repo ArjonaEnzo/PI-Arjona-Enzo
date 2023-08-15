@@ -13,6 +13,9 @@ const DataBase = async () => {
         continent: country.region,
         capital: country.capital ? country.capital[0] : "No Capital",
         population: country.population,
+        subregion: country.subregion,
+        area: country.area,
+        
       };
     });
     await Country.bulkCreate(response);

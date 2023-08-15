@@ -28,7 +28,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      subRegion: {
+      subregion: {
         type: DataTypes.STRING,
       },
       area: {
@@ -40,8 +40,8 @@ module.exports = (sequelize) => {
       },
     },
     {
-      freezeTableName:true,
-      timestamps: false
+      freezeTableName: true,
+      timestamps: false,
     }
   );
 };

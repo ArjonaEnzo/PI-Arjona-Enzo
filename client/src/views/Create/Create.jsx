@@ -4,16 +4,12 @@ import { getAllCountries, postActivities } from "../../Redux/Actions/actions";
 import { getDificulty } from "./getDificilty";
 
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const Create = () => {
   const countries = useSelector((state) => state.allCountries);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getAllCountries());
-    return () => {};
-  }, [dispatch]);
-
+  const history = useHistory();
   const [state, setState] = useState({
     name: "",
     dificult: 1,
@@ -21,7 +17,10 @@ const Create = () => {
     season: [],
     countries: [],
   });
-  console.log(state.season);
+  useEffect(() => {
+    dispatch(getAllCountries());
+    return () => {};
+  }, [dispatch, state]);
 
   const [errors, setErrors] = useState({
     season: "This field is required",
@@ -101,6 +100,14 @@ const Create = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(postActivities(state));
+    setState({
+      name: "",
+      dificult: 1,
+      duration: "",
+      season: [],
+      countries: [],
+    });
+    history.push("/home");
   };
 
   const handleRang = (e) => {

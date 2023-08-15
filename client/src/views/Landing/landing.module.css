@@ -1,0 +1,22 @@
+.back {
+  background-image: url("https://cdna.artstation.com/p/assets/images/images/006/122/970/original/ahmed-adel-world.gif?1496198125");
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.contein{
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+}
+.button{
+  padding: 10xp 20xp;
+  font-size: 16px;
+  background-color: blue;
+  color: white;
+  border: none;
+  cursor: pointer
+}

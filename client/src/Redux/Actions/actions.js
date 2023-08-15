@@ -1,5 +1,14 @@
 import axios from "axios";
-import { GET_ALL_COUNTRIES } from "./actions-type";
+import {
+  CLEAR,
+  FILTER,
+  FILTER_ACTIVITIES,
+  GET_ALL_ACTIVITIES,
+  GET_ALL_COUNTRIES,
+  GET_NAME,
+  ORDER,
+  PAGINATE,
+} from "./actions-type";
 
 export function postActivities(state) {
   return async function (dispatch) {
@@ -7,8 +16,9 @@ export function postActivities(state) {
       const reponse = await axios.post(
         "http://localhost:3001/activities/",
         state
-      );
-      console.log("estadoAct",state);
+        );
+        console.log(reponse.data);
+      console.log("estadoAct", state);
       alert("The activity is created correctly");
     } catch (error) {
       alert(error.response.data.error);
@@ -30,4 +40,96 @@ export function getAllCountries() {
       console.log(error);
     }
   };
+}
+
+export function page(direction) {
+  return async function (dispatch) {
+    try {
+      dispatch({
+        type: PAGINATE,
+        payload: direction,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function order(direction) {
+  return async function (dispatch) {
+    try {
+      dispatch({
+        type: ORDER,
+        payload: direction,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function filter(value) {
+  return async function (dispatch) {
+    try {
+      dispatch({
+        type: FILTER,
+        payload: value,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function filterActivities(activity) {
+  return ({
+    type: FILTER_ACTIVITIES,
+    payload:activity
+  })
+  
+}
+
+export function getActivities() {
+  return async function (dispatch) {
+    try {
+      const response = await axios("http://localhost:3001/activities/");
+      dispatch({
+        type: GET_ALL_ACTIVITIES,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function getName(name) {
+  return async function (dispatch) {
+    try {
+      const response = await axios(
+        
+        `http://localhost:3001/countries/name?name=${name}`
+      );
+      console.log(response.data)
+      dispatch({
+        type: GET_NAME,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function clear(value) {
+  return async function (dispatch) {
+    try {
+      dispatch({
+        type: CLEAR,
+        payload: value,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
