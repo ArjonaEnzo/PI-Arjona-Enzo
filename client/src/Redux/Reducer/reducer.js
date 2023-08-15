@@ -19,48 +19,14 @@ const inicialState = {
 };
 
 function rootReducer(state = inicialState, action) {
-  const numOfPage = 10;
-
   switch (action.type) {
     case GET_ALL_COUNTRIES:
       return {
         ...state,
         allCountries: action.payload,
-        allCountriesBC: [...action.payload].splice(0, numOfPage),
+        allCountriesBC: [...action.payload],
         allCountriesBC2: action.payload,
       };
-
-    case PAGINATE:
-      const nextPage = state.currentPage + 1;
-      const prevPage = state.currentPage - 1;
-      if (action.payload === "next") {
-        const firstIndex = nextPage * numOfPage;
-        if (firstIndex >= state.allCountriesBC2.length) {
-          return { ...state };
-        }
-        return {
-          ...state,
-          allCountriesBC: state.allCountriesBC2.slice(
-            firstIndex,
-            firstIndex + numOfPage
-          ),
-          currentPage: nextPage,
-        };
-      } else if (action.payload === "prev") {
-        if (prevPage < 0) {
-          return { ...state };
-        }
-        const firstIndex = prevPage * numOfPage;
-        return {
-          ...state,
-          allCountriesBC: state.allCountriesBC2.slice(
-            firstIndex,
-            firstIndex + numOfPage
-          ),
-          currentPage: prevPage,
-        };
-      }
-      return state;
 
     case ORDER:
       if (action.payload === "az") {
@@ -73,9 +39,7 @@ function rootReducer(state = inicialState, action) {
         );
         return {
           ...state,
-          allCountriesBC: [...allCountriesOrder].splice(0, numOfPage),
-          // allCountriesBC2: allCountriesOrder,
-          currentPage: 0,
+          allCountriesBC: [...allCountriesOrder],
         };
       }
 
@@ -89,9 +53,7 @@ function rootReducer(state = inicialState, action) {
         );
         return {
           ...state,
-          allCountriesBC: [...allCountriesOrder].splice(0, numOfPage),
-          // allCountriesBC2: allCountriesOrder,
-          currentPage: 0,
+          allCountriesBC: [...allCountriesOrder],
         };
       }
 
@@ -101,9 +63,7 @@ function rootReducer(state = inicialState, action) {
         );
         return {
           ...state,
-          allCountriesBC: [...allCountriesOrder].splice(0, numOfPage),
-          // allCountriesBC2: allCountriesOrder,
-          currentPage: 0,
+          allCountriesBC: [...allCountriesOrder],
         };
       }
 
@@ -113,9 +73,7 @@ function rootReducer(state = inicialState, action) {
         );
         return {
           ...state,
-          allCountriesBC: [...allCountriesOrder].splice(0, numOfPage),
-          // allCountriesBC2: allCountriesOrder,
-          currentPage: 0,
+          allCountriesBC: [...allCountriesOrder],
         };
       }
       return state;
@@ -129,8 +87,7 @@ function rootReducer(state = inicialState, action) {
 
       return {
         ...state,
-        allCountriesBC: [...filtrados].splice(0, numOfPage),
-        // allCountriesBC2: filtrados,
+        allCountriesBC: [...filtrados],
       };
 
     case GET_ALL_ACTIVITIES:
@@ -187,14 +144,13 @@ function rootReducer(state = inicialState, action) {
       console.log(countriesFinal);
       return {
         ...state,
-        allCountriesBC: countriesFinal.splice(0, numOfPage),
+        allCountriesBC: countriesFinal,
       };
 
     case CLEAR:
       return {
         ...state,
-        allCountriesBC: state.allCountriesBC2.splice(0, numOfPage),
-        currentPage: 0,
+        allCountriesBC: state.allCountriesBC2,
       };
 
     default:

@@ -8,10 +8,11 @@ import {
   getActivities,
   getAllCountries,
   order,
-  page,
 } from "../../Redux/Actions/actions";
 
 import style from "./home.module.css";
+import PageNumbers from "../../components/Paginate/pageNumbers";
+import Paginate from "../../components/Paginate/Paginate";
 const Home = () => {
   const dispatch = useDispatch();
 
@@ -20,22 +21,41 @@ const Home = () => {
     activities: state.activities,
   }));
 
-  const [filters, setFilters] = useState({});
-
   useEffect(() => {
     dispatch(getAllCountries());
     dispatch(getActivities());
   }, [dispatch]);
 
-  console.log("acti", activities);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const [countriesPage] = useState(10);
+
+  const indexLastCountry = currentPage * countriesPage;
+
+  const indexFirstCountry = indexLastCountry - countriesPage;
+
+  const currentCountries = allCountries.slice(
+    indexFirstCountry,
+    indexLastCountry
+  );
+  const cantCountries = allCountries.length;
+
+  const numerito = Math.ceil(cantCountries / countriesPage);
+
+  const arrayPages = PageNumbers(countriesPage, cantCountries);
+  const cantPages = arrayPages.length;
+
+  if (currentPage > cantPages) {
+    setCurrentPage(1);
+  }
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   const handlerFilter = (e) => {
     const { value } = e.target;
     if (e.target.value !== "0") dispatch(filter(value));
-  };
-
-  const paginate = (e) => {
-    dispatch(page(e.target.name));
   };
 
   const orderByName = (e) => {
@@ -51,7 +71,7 @@ const Home = () => {
   values = values.map((element) => element.name);
 
   const onlyValues = [...new Set(values)];
-  
+
   const handlerActivity = (event) => {
     dispatch(filterActivities(event.target.value));
   };
@@ -80,15 +100,7 @@ const Home = () => {
           Max Population to Min Population
         </button>
       </div>
-      <div>
-        <label>Paginate</label>
-        <button name="prev" onClick={paginate}>
-          Prev
-        </button>
-        <button name="next" onClick={paginate}>
-          Next
-        </button>
-      </div>
+
       <div>
         <select name="continent" id="continent" onChange={handlerFilter}>
           <option value="0" selected>
@@ -120,8 +132,14 @@ const Home = () => {
         </select>
       </div>
       <div>
-        <Cards props={allCountries} />
+        <Cards props={currentCountries} />
       </div>
+      <Paginate
+        countriesPage={countriesPage}
+        allCountries={allCountries.length}
+        paginate={paginate}
+        currentpage={currentPage}
+      />
     </div>
   );
 };
