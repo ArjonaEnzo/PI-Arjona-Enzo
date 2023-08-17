@@ -22,10 +22,15 @@ const Home = () => {
     activities: state.activities,
   }));
 
-  useEffect(() => {
-    dispatch(getAllCountries());
-    dispatch(getActivities());
-  }, [dispatch]);
+   useEffect(() => {
+     if (!allCountries.length) {
+       dispatch(getAllCountries());
+     }
+     if (!activities.length) {
+       dispatch(getActivities());
+     }
+   }, [dispatch, allCountries.length, activities.length]);
+
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -64,6 +69,7 @@ const Home = () => {
 
   const handlerClear = (e) => {
     dispatch(clear(e.target.value));
+    setCurrentPage(1);
   };
 
   let values = activities;

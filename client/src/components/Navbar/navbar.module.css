@@ -26,8 +26,10 @@
 }
 
 .imp{
-width: 8rem;
-height: 1.2rem;
+width: 12rem;
+height: 1.8rem;
+
+font-size: larger;
 }
 a{
   text-decoration: none;

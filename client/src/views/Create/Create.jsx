@@ -26,13 +26,7 @@ const Create = () => {
     return () => {};
   }, [dispatch, state]);
 
-  const [errors, setErrors] = useState({
-    // season: "This field is required",
-    // name: "This field is required",
-    // duration: "This field is required",
-    // dificult: "This field is required",
-    // countries: "This field is required",
-  });
+  const [errors, setErrors] = useState({});
 
   let [selected, setSelected] = useState([]);
 
@@ -90,6 +84,13 @@ const Create = () => {
     if (selected.length === 0) {
       setErrors({ ...errors, countries: "Select at least on country" });
     }
+
+    if (delSelec) {
+      setState((state) => ({
+        ...state,
+        countries: state.countries.filter((c) => c !== id),
+      }));
+    }
   };
 
   const disable = () => {
@@ -104,9 +105,7 @@ const Create = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(event.target.value);
     const selectedCoun = selected.map((c) => c.id);
-    console.log(selectedCoun);
     setState({
       ...state,
       countries: selectedCoun,

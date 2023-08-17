@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { Switch, BrowserRouter, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Home from "./views/Home/Home";
 import Landing from "./views/Landing/Landing";
 import Create from "./views/Create/Create";
