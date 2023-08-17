@@ -8,8 +8,11 @@ import { useHistory } from "react-router-dom";
 
 const Create = () => {
   const countries = useSelector((state) => state.allCountries);
+
   const dispatch = useDispatch();
+
   const history = useHistory();
+
   const [state, setState] = useState({
     name: "",
     dificult: 1,
@@ -17,20 +20,21 @@ const Create = () => {
     season: [],
     countries: [],
   });
+
   useEffect(() => {
     dispatch(getAllCountries());
     return () => {};
   }, [dispatch, state]);
 
   const [errors, setErrors] = useState({
-    season: "This field is required",
-    name: "This field is required",
-    duration: "This field is required",
-    dificult: "This field is required",
-    countries: "This field is required",
+    // season: "This field is required",
+    // name: "This field is required",
+    // duration: "This field is required",
+    // dificult: "This field is required",
+    // countries: "This field is required",
   });
 
-  const [selected, setSelected] = useState([]);
+  let [selected, setSelected] = useState([]);
 
   const handleChange = (event) => {
     setState({
@@ -71,7 +75,7 @@ const Create = () => {
     setSelected([
       ...selected,
       {
-        id: countriesId[0],
+        id: countriesId,
         name: country.name,
         flag: country.flagImage,
       },
@@ -79,12 +83,13 @@ const Create = () => {
   };
 
   const deletCountries = (id) => {
+    const delSelec = selected.filter((c) => c.id !== id);
+    selected = delSelec;
+
+    setSelected([...selected]);
     if (selected.length === 0) {
       setErrors({ ...errors, countries: "Select at least on country" });
     }
-    const filtCon = countries.filter((c) => c !== id);
-    setState({ ...state, countries: filtCon });
-    setSelected(selected.filter((c) => c.id !== id));
   };
 
   const disable = () => {
@@ -99,7 +104,15 @@ const Create = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(event.target.value);
+    const selectedCoun = selected.map((c) => c.id);
+    console.log(selectedCoun);
+    setState({
+      ...state,
+      countries: selectedCoun,
+    });
     dispatch(postActivities(state));
+
     setState({
       name: "",
       dificult: 1,
@@ -140,7 +153,6 @@ const Create = () => {
   const filterCountries = countries.filter(
     (count) => !state.countries.includes(count.id)
   );
-
   const validate = (state, name) => {
     if (name === "name") {
       if (state.name !== "") setErrors({ ...errors, name: "" });
@@ -182,9 +194,9 @@ const Create = () => {
   };
 
   return (
-    <div>
+    <div className={styled.cointrein}>
       <form className={styled.contForm} onSubmit={handleSubmit}>
-        <label>Name</label>
+        <label className={styled.p}>Name</label>
         <input
           placeholder="Name of the activity"
           name="name"
@@ -196,7 +208,7 @@ const Create = () => {
           {errors.name && <p>{errors.name}</p>}
         </label>
 
-        <label>Difficult</label>
+        <label className={styled.p}>Difficult</label>
         <input
           name="dificult"
           onChange={handleRang}
@@ -211,7 +223,7 @@ const Create = () => {
           {errors.dificult && <p>{errors.dificult}</p>}
         </label>
 
-        <label>Duration</label>
+        <label className={styled.p}>Duration</label>
         <input
           name="duration"
           onChange={handleRang}
@@ -227,7 +239,7 @@ const Create = () => {
           {errors.duration && <p>{errors.duration}</p>}
         </label>
 
-        <label>Season</label>
+        <label className={styled.p}>Season</label>
         <div>
           <select name="season" onChange={handleChange}>
             <option value="">-Select a season-</option>
@@ -241,9 +253,9 @@ const Create = () => {
           {errors.season && <p>{errors.season}</p>}
         </label>
 
-        <label>Countries</label>
+        <label className={styled.p}>Countries</label>
         <select onChange={handleCountries} name="countries" id="country">
-          <option value="0">-Select an option-</option>
+          <option value="0">-Select a Country-</option>
           {filterCountries?.map((c) => {
             return (
               <option value={c.id} key={c.id}>
@@ -257,18 +269,31 @@ const Create = () => {
         </label>
 
         <div>
-          <h2>Countries Selected:</h2>
-          {selected?.map((c, index) => {
-            return (
-              <div key={index}>
-                <div>
-                  <img src={c.flag} alt={`${c.name}icon`} />
-                  <p>{c.name}</p>
+          <div className={styled.conteins}>
+            {selected?.map((c, index) => {
+              return (
+                <div key={index} className={styled.boxCon}>
+                  <div className={styled.boxi}>
+                    <img
+                      className={styled.flag}
+                      src={c.flag}
+                      alt={`${c.name}icon`}
+                    />
+                    <p className={styled.p}>{c.name}</p>
+                  </div>
+                  <div>
+                    <button
+                      type="button"
+                      className={styled.close}
+                      onClick={() => deletCountries(c.id)}
+                    >
+                      x
+                    </button>
+                  </div>
                 </div>
-                <button onClick={() => deletCountries(c.id)}>x</button>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
 
         <input

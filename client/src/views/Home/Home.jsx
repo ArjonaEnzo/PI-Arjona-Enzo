@@ -13,6 +13,7 @@ import {
 import style from "./home.module.css";
 import PageNumbers from "../../components/Paginate/pageNumbers";
 import Paginate from "../../components/Paginate/Paginate";
+
 const Home = () => {
   const dispatch = useDispatch();
 
@@ -40,9 +41,8 @@ const Home = () => {
   );
   const cantCountries = allCountries.length;
 
-  const numerito = Math.ceil(cantCountries / countriesPage);
-
   const arrayPages = PageNumbers(countriesPage, cantCountries);
+
   const cantPages = arrayPages.length;
 
   if (currentPage > cantPages) {
@@ -59,7 +59,7 @@ const Home = () => {
   };
 
   const orderByName = (e) => {
-    dispatch(order(e.target.name));
+    dispatch(order(e.target.value));
   };
 
   const handlerClear = (e) => {
@@ -77,69 +77,71 @@ const Home = () => {
   };
 
   return (
-    <div>
-      <h1> Chouse your Country </h1>
-      <div>
+    <div className={style.homeContainer}>
+      <div className={style.selectConteiner}>
         <div>
           <button name="clear" onClick={handlerClear}>
             Clear Filters
           </button>
         </div>
 
-        <label>Filter/Order</label>
-        <button name="az" onClick={orderByName}>
-          Order A to Z
-        </button>
-        <button name="za" onClick={orderByName}>
-          Order Z to A
-        </button>
-        <button name="min-max" onClick={orderByName}>
-          Min Population to Max Population
-        </button>
-        <button name="max-min" onClick={orderByName}>
-          Max Population to Min Population
-        </button>
-      </div>
+        <select name="order" id="order" onChange={orderByName}>
+          <option value="" selected disabled>
+            Order By
+          </option>
+          <option value="az">Order A to Z</option>
+          <option value="za">Order Z to A</option>
+          <option value="min-max">Min Population to Max Population</option>
+          <option value="max-min">Max Population to Min Population</option>
+        </select>
 
-      <div>
-        <select name="continent" id="continent" onChange={handlerFilter}>
-          <option value="0" selected>
-            Filter by Continent
-          </option>
-          <option value="Africa">Africa</option>
-          <option value="Americas">Americas</option>
-          <option value="Asia">Asia</option>
-          <option value="Europe">Europe</option>
-          <option value="Oceania">Oceania</option>
-          <option value="Antarctic">Antarctic</option>
-        </select>
+        <div>
+          <select name="continent" id="continent" onChange={handlerFilter}>
+            <option value="0" selected="true" disabled="disable">
+              Filter by Continent
+            </option>
+            <option value="Africa">Africa</option>
+            <option value="Americas">Americas</option>
+            <option value="Asia">Asia</option>
+            <option value="Europe">Europe</option>
+            <option value="Oceania">Oceania</option>
+            <option value="Antarctic">Antarctic</option>
+          </select>
+        </div>
+        <div>
+          <select
+            name="act"
+            id="order"
+            className={style.selects}
+            onChange={handlerActivity}
+          >
+            <option className={style.option} value="Select activity">
+              Select activity
+            </option>
+            <option className={style.option} value="All activities">
+              All activities
+            </option>
+            {onlyValues?.map((activity, index) => {
+              return (
+                <option className={style.option} value={activity} key={index}>
+                  {activity}
+                </option>
+              );
+            })}
+          </select>
+        </div>
       </div>
-      <div>
-        <select className={style.selects} onChange={handlerActivity}>
-          <option className={style.option} value="Select activity">
-            Select activity
-          </option>
-          <option className={style.option} value="All activities">
-            All activities
-          </option>
-          {onlyValues?.map((activity, index) => {
-            return (
-              <option className={style.option} value={activity} key={index}>
-                {activity}
-              </option>
-            );
-          })}
-        </select>
+      <div className={style.pa}>
+        <Paginate
+          countriesPage={countriesPage}
+          allCountries={allCountries.length}
+          paginate={paginate}
+          currentpage={currentPage}
+        />
       </div>
       <div>
         <Cards props={currentCountries} />
       </div>
-      <Paginate
-        countriesPage={countriesPage}
-        allCountries={allCountries.length}
-        paginate={paginate}
-        currentpage={currentPage}
-      />
     </div>
   );
 };

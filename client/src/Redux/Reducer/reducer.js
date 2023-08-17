@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 // importo las actions-type
 import {
   CLEAR,
@@ -7,7 +8,7 @@ import {
   GET_ALL_COUNTRIES,
   GET_NAME,
   ORDER,
-  PAGINATE,
+  POST_ACTIVITY,
 } from "../Actions/actions-type";
 
 const inicialState = {
@@ -141,16 +142,23 @@ function rootReducer(state = inicialState, action) {
           );
         }
       }
-      console.log(countriesFinal);
       return {
         ...state,
         allCountriesBC: countriesFinal,
       };
 
     case CLEAR:
+      const selects = document.getElementsByTagName("select");
+      for (let i = 0; i < selects.length; i++) {
+        selects[i].selectedIndex = 0;
+      }
       return {
         ...state,
         allCountriesBC: state.allCountriesBC2,
+      };
+    case POST_ACTIVITY:
+      return {
+        ...state,
       };
 
     default:

@@ -1,0 +1,35 @@
+.selectConteiner {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 0.2rem solid black;
+  align-items: center;
+  height: 2.5rem ;
+}
+
+.selectConteiner select {
+  border-radius: 1rem;
+  border: 0.2rem solid black;
+  width: 15rem;
+  text-align: center;
+  font-size: 1.2rem;
+  background-color:#5cbca6 ;
+  color: black;
+
+}
+
+.selectConteiner button {
+  border-radius: 1rem;
+  border: 0.2rem solid black;
+  width: 15rem;
+  text-align: center;
+  font-size: 1.2rem;
+  background-color: #5cbca6 ;
+  color: black;
+}
+
+.homeContainer{
+  display: flex;
+  flex-direction: column;
+  height: 88vh;
+  justify-content: space-around;
+}

@@ -1,6 +1,12 @@
-.conteinCards{
+.conteinCards {
   display: flex;
-  justify-content: center;
-  align-items: center ;
+  justify-content: space-around;
   flex-wrap: wrap;
+  grid-template-columns: 4;
 }
+
+.containerCard {
+  width: 100%;
+}
+
+

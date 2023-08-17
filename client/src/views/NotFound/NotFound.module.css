@@ -1,0 +1,8 @@
+.screen{
+    display: flex;   
+    color: white;
+    text-align: center;
+    justify-content:center;
+    background-color: rgba(133, 6, 6, 0.795);
+    height: 100%;
+}

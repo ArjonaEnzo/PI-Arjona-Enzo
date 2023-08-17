@@ -14,4 +14,4 @@ export const FILTER_ACTIVITIES = "FILTER_ACTIVITIES";
 
 export const CLEAR = "CLEAR";
 
-
+export const POST_ACTIVITY = "POST_ACTIVITY";

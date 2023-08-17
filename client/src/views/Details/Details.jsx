@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import style from "./Details.module.css";
 const Details = () => {
   const { id } = useParams();
 
@@ -19,19 +20,26 @@ const Details = () => {
   }, [id]);
 
   return (
-    <div>
-      <h2>Country Details</h2>
-      <p>
-        <img src={details.flagImage} alt={`${details.name} Flag`} />
-      </p>
-      <p>{details.name}</p>
-      <p>Code: {details.id}</p>
-      <p>Name: {details.name}</p>
-      <p>Continent: {details.continent}</p>
-      <p>Capital: {details.capital}</p>
-      <p>Subregion: {details.subregion}</p>
-      <p>Area: {details.area}</p>
-      <p>Population: {details.population}</p>
+    <div className={style.allContainer}>
+      <div className={style.detailContainer}>
+        <div className={style.flagConteiner}>
+          <p>
+            <img
+              className={style.flag}
+              src={details.flagImage}
+              alt={`${details.name} Flag`}
+            />
+          </p>
+          <p className={style.p}>{details.name}</p>
+          <p className={style.p}>Code: {details.id}</p>
+          <p className={style.p}>Name: {details.name}</p>
+          <p className={style.p}>Capital: {details.capital}</p>
+          <p className={style.p}>Continent: {details.continent}</p>
+          <p className={style.p}>Subregion: {details.subregion}</p>
+          <p className={style.p}>Area: {details.area}</p>
+          <p className={style.p}>Population: {details.population}</p>
+        </div>
+      </div>
     </div>
   );
 };

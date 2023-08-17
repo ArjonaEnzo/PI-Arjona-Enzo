@@ -1,0 +1,104 @@
+.contein {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100vw;
+}
+
+.contein2 {
+  display: flex;
+  flex-wrap: wrap;
+  height: fit-content;
+  width: 80vw;
+}
+.paginate{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-inline: 0px;
+  padding-inline: 0px;
+  height: fit-content;
+  bottom: 0;
+  width: 100%;
+}
+
+.botoncito{
+    font-family: 'Roboto Condensed', sans-serif;
+    height: 1.8rem;
+    width: 2rem;
+    color:black;
+    background-color:  #c4dafa;
+    float: left;
+    border: 1px solid transparent;
+    text-align: center;
+}
+
+.botoncito:hover{
+    background-color: white;
+    box-shadow: 1px 1px 1px 0 #5cbca6;
+}
+
+.botoncitoSelected{
+    font-family: 'Roboto Condensed', sans-serif;
+    height: 1.8rem;
+    width: 2rem;
+    border-radius: 15%;
+    color:white;
+    background-color: #5cbca6;
+    float: left;
+    border: 1px solid #5cbca6;
+}
+ul{
+    margin-block-end: 0em;
+}
+@media (max-width: 950px) {
+    .botoncito{
+        height: 1.2rem;
+        width: 1.2rem;
+        font-size: 9px;
+    }
+    .botoncitoSelected{
+        height: 1.2rem;
+        width: 1.2rem;
+        font-size: 9px;
+    }
+    .paginate{
+        height: 2.2rem; 
+    }
+}
+
+@media (max-width: 550px) {
+    .botoncito{
+        height: 0.85rem;
+        width: 0.85rem;
+        font-size: 6px;
+        padding: 0px;
+    }
+    .botoncitoSelected{
+        height: 0.85rem;
+        width: 0.85rem;
+        font-size: 6px;
+        padding: 0px;
+    }
+    .paginate{
+        height: 2.2rem; 
+    }
+}
+
+@media (max-width: 370px) {
+    .botoncito{
+        height: 0.7rem;
+        width: 0.7rem;
+        font-size: 6px;
+        padding: 0px;
+    }
+    .botoncitoSelected{
+        height: 0.7rem;
+        width: 0.7rem;
+        font-size: 6px;
+        padding: 0px;
+    }    
+    .paginate{
+        height: 1.8rem; 
+    }
+}

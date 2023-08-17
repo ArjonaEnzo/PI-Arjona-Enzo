@@ -4,10 +4,8 @@ import { Link } from "react-router-dom";
 const Landing = () => {
   return (
     <div className={styled.back}>
-      <div className={styled.contein}>
-        <p>Bienvenido a nuestro proyecto increíble</p>
-      </div>
       <Link to="/home">
+        <img src="" alt="" />
         <h3>Welcome To Countries PI</h3>
       </Link>
     </div>

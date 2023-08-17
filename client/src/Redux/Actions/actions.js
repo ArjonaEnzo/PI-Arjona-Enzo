@@ -8,6 +8,7 @@ import {
   GET_NAME,
   ORDER,
   PAGINATE,
+  POST_ACTIVITY,
 } from "./actions-type";
 
 export function postActivities(state) {
@@ -16,14 +17,15 @@ export function postActivities(state) {
       const reponse = await axios.post(
         "http://localhost:3001/activities/",
         state
-        );
-        console.log(reponse.data);
-      console.log("estadoAct", state);
+      );
+      const activity = reponse.data;
       alert("The activity is created correctly");
+      dispatch({
+        type: POST_ACTIVITY,
+        payload: activity,
+      });
     } catch (error) {
       alert(error.response.data.error);
-
-      console.log(error);
     }
   };
 }
@@ -82,11 +84,10 @@ export function filter(value) {
 }
 
 export function filterActivities(activity) {
-  return ({
+  return {
     type: FILTER_ACTIVITIES,
-    payload:activity
-  })
-  
+    payload: activity,
+  };
 }
 
 export function getActivities() {
@@ -107,10 +108,8 @@ export function getName(name) {
   return async function (dispatch) {
     try {
       const response = await axios(
-        
         `http://localhost:3001/countries/name?name=${name}`
       );
-      console.log(response.data)
       dispatch({
         type: GET_NAME,
         payload: response.data,
@@ -131,5 +130,5 @@ export function clear(value) {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 }

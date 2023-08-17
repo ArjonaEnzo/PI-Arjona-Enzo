@@ -5,16 +5,10 @@ const postActivitiesController = async (
   dificult,
   duration,
   season,
-  countries,
+  countries
 ) => {
-  
   if (!name || !dificult || !season || !countries) {
     throw new Error("Campos Obligatorios");
-  }
-
-  const findAct = await Activity.findOne({ where: { name: name } });
-  if (findAct) {
-    throw new Error("La Actividad ya existe!");
   }
 
   const newActivity = await Activity.create({
@@ -22,7 +16,6 @@ const postActivitiesController = async (
     dificult,
     duration,
     season,
-    countries,
   });
   await newActivity.addCountry(countries);
 

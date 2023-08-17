@@ -1,4 +1,4 @@
-const { Country } = require("../db");
+const { Country,Activity } = require("../db");
 
 const getAllCountriesController = async () => {
   const countries = await Country.findAll();

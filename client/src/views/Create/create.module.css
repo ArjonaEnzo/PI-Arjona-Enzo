@@ -1,18 +1,56 @@
-.contForm{
+.contForm {
+  margin-top: 3rem;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 50rem;
+  background-color: #748c81dc;
+
+  border-radius:2rem;
 }
 
-.inputInf{
+.inputInf {
   width: 15rem;
 }
-.inputSub{
+.inputSub {
   margin: 2rem;
-  background-color: blueviolet;
+  background-color: #D9B79A;
+  color:black
 }
 
-.errorInfo{
+.errorInfo {
   color: red;
+}
+
+.boxCon {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  flex-direction: row;
+}
+
+.flag {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 100%;
+  border: 0.09rem solid black;
+}
+.conteins {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  flex-direction: row;
+}
+.boxi {
+  margin-top: 1rem;
+  align-content: center;
+}
+
+.cointrein {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
 }
